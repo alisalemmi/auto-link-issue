@@ -1,6 +1,6 @@
 # link pull request to issue
 
-this github action runs when a new pull request created. it tries to find an issue wich its title or body contains pull request branch name. issue shouls be open, in the same repo and currently not linked to any pull request.
+this github action runs when a new pull request created. it tries to find an issue wich its title or body contains pull request branch name. issue should be open, in the same repo and currently not linked to any pull request.
 
 ## Usage:
 
