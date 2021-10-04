@@ -5,7 +5,7 @@ this github action runs when a new pull request created. it tries to find an iss
 ## Usage:
 
 ```yaml
-- uses: alisalemmi/auto-link-issue@v1
+- uses: alisalemmi/auto-link-issue@v1.0.0
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
