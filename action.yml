@@ -1,11 +1,12 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
-inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+name: auto link pull request
+description: link  pull request to related issue based on issue title and pull request branch
+author: 'ali salemi'
+
 runs:
   using: 'node12'
   main: 'dist/index.js'
+
+inputs:
+  github_token:
+    required: true
+    description: github token
