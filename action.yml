@@ -1,6 +1,9 @@
 name: auto link pull request
 description: link  pull request to related issue based on issue title and pull request branch
 author: 'ali salemi'
+branding:
+  icon: 'link'  
+  color: 'green'
 
 runs:
   using: 'node12'
