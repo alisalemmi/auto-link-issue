@@ -11,16 +11,39 @@ async function findIssue(branch: string): Promise<number> {
   if (issues.status === 200 && issues.data.items.length > 0)
     return issues.data.items[0].number;
 
-  setFailed('can not find related issue');
   throw new Error('can not find related issue');
 }
 
-if (
-  context.eventName === 'pull_request' &&
-  context.payload.action === 'opened' &&
-  context.payload.pull_request
-) {
-  findIssue(context.payload.pull_request['head'].ref).then(issue =>
-    console.log('related issue:', issue)
-  );
-} else setFailed('invalid action event');
+async function link(issue: number, pullrequest: number): Promise<void> {
+  const prBody =
+    context.payload.pull_request && context.payload.pull_request.body
+      ? `${context.payload.pull_request.body}\n---\n`
+      : '';
+
+  await octokit.rest.issues.update({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    issue_number: pullrequest,
+    body: `${prBody}fix #${issue}`
+  });
+}
+
+async function main() {
+  if (
+    context.eventName === 'pull_request' &&
+    context.payload.action === 'opened' &&
+    context.payload.pull_request
+  ) {
+    try {
+      const issue = await findIssue(context.payload.pull_request['head'].ref);
+      console.log('related issue:', issue);
+
+      await link(issue, context.payload.pull_request.number);
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  } else setFailed('invalid action event');
+}
+
+main();
